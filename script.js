@@ -22,11 +22,17 @@ const VoiceRSS={speech:function(e){this._validate(e),this._request(e)},_validate
 
 // get jokes from joke api
 async function getJokes() {
+    let joke = '';
     const apiUrl = 'https://v2.jokeapi.dev/joke/Any';
     try {
         const response = await fetch(apiUrl)
         const data = await response.json();
-        console.log(data);
+       if (data.setup) {
+           joke = `${data.setup} ... ${data.delivery}`
+       } else {
+           joke = data.joke;
+       }
+       console.log(joke);
     } catch (error) {
         // catch errors here
         console.log('whoops', error);
